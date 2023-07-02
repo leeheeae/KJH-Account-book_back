@@ -5,11 +5,7 @@ import { join } from 'path';
 import * as express from 'express';
 import * as fs from 'fs';
 import * as expressBasicAuth from 'express-basic-auth';
-import {
-  DEV,
-  SWAGGER_PASSWORD,
-  SWAGGER_USER,
-} from './common/constants/common.constant';
+import { DEV } from './common/constants/common.constant';
 import { ValidationPipe } from '@nestjs/common';
 import { setupSwagger } from './utils/setup-swagger';
 
@@ -32,7 +28,7 @@ async function bootstrap() {
     expressBasicAuth({
       challenge: true,
       users: {
-        [SWAGGER_USER]: SWAGGER_PASSWORD,
+        [process.env.SWAGGER_USER]: process.env.SWAGGER_PASSWORD,
       },
     }),
   );

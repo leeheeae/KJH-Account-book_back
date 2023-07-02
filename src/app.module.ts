@@ -4,11 +4,6 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
-  DB_DATABASE,
-  DB_HOST,
-  DB_PASSWORD,
-  DB_PORT,
-  DB_USERNAME,
   DEV,
   ENV_FILE_NAME,
   ENV_FILE_NAME_DEV,
@@ -37,11 +32,11 @@ import { HealthModule } from './health/health.module';
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: DB_HOST,
-      port: Number(DB_PORT),
-      username: DB_USERNAME,
-      password: DB_PASSWORD,
-      database: DB_DATABASE,
+      host: process.env.DB_HOST,
+      port: Number(process.env.DB_PORT),
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
       synchronize: process.env.NODE_ENV !== PROD,
       keepConnectionAlive: false,
       namingStrategy: new SnakeNamingStrategy(),
