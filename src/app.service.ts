@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { IAppService } from './app-service.interface';
 
 @Injectable()
-export class AppService {
-  getHello(): string {
-    return 'Hello World!';
+export class AppService implements IAppService {
+  getHello(): { title: string } {
+    return { title: 'KJH-companion-animal_back' };
   }
 }

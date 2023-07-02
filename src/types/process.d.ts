@@ -5,5 +5,10 @@ declare namespace NodeJS {
     NODE_ENV: 'development' | 'production';
     SWAGGER_USER: string;
     SWAGGER_PASSWORD: string;
+    DB_HOST: string;
+    DB_PORT: string;
+    DB_USERNAME: string;
+    DB_PASSWORD: string;
+    DB_DATABASE: string;
   }
 }
