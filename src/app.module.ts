@@ -3,22 +3,17 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import {
-  DEV,
-  ENV_FILE_NAME,
-  ENV_FILE_NAME_DEV,
-  PROD,
-} from './common/constants/common.constant';
+import { DEV, ENV_FILE_NAME, ENV_FILE_NAME_DEV, PROD } from './common/constants/common.constant';
 import * as Joi from 'joi';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { MulterModule } from '@nestjs/platform-express';
 import { HealthModule } from './health/health.module';
+import { UsersModule } from './users/users.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath:
-        process.env.NODE_ENV === DEV ? ENV_FILE_NAME_DEV : ENV_FILE_NAME,
+      envFilePath: process.env.NODE_ENV === DEV ? ENV_FILE_NAME_DEV : ENV_FILE_NAME,
       validationSchema: Joi.object({
         NODE_ENV: Joi.string().required(),
         SWAGGER_USER: Joi.string().required(),
@@ -46,6 +41,7 @@ import { HealthModule } from './health/health.module';
       dest: './files',
     }),
     HealthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [
