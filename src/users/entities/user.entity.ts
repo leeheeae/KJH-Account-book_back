@@ -47,7 +47,7 @@ export class User extends CoreEntity {
   @ApiProperty({ example: '010-1234-5678', description: '휴대폰 번호' })
   phoneNum: string;
 
-  @Column('varchar', { default: '한국', nullable: true, comment: '지역' })
+  @Column('varchar', { default: '한국', nullable: true, comment: '주소' })
   @IsString({ message: '주소가 정확하지 않습니다.' })
   @IsOptional()
   @ApiProperty({ example: '한국', description: '주소' })

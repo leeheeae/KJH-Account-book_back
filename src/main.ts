@@ -7,7 +7,7 @@ import * as fs from 'fs';
 import * as expressBasicAuth from 'express-basic-auth';
 import { DEV } from './common/constants/common.constant';
 import { ValidationPipe } from '@nestjs/common';
-import { setupSwagger } from './utils/setup-swagger';
+import { setupSwagger } from './common/utils/setup-swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
