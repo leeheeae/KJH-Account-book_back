@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
@@ -9,6 +9,9 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { MulterModule } from '@nestjs/platform-express';
 import { HealthModule } from './health/health.module';
 import { UsersModule } from './users/users.module';
+import { JwtMiddleware } from './libs/jwt/jwt.middleware';
+import { JwtModule } from './libs/jwt/jwt.module';
+import { LoggerModule } from './libs/logger/logger.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -23,6 +26,9 @@ import { UsersModule } from './users/users.module';
         DB_USERNAME: Joi.string().required(),
         DB_PASSWORD: Joi.string().required(),
         DB_DATABASE: Joi.string().required(),
+        JWT_PRIVATE_KEY: Joi.string().required(),
+        JWT_EXPIRES_SEC: Joi.string().required(),
+        REFRESH_EXPIRES_SEC: Joi.string().required(),
       }),
     }),
     TypeOrmModule.forRoot({
@@ -37,6 +43,14 @@ import { UsersModule } from './users/users.module';
       namingStrategy: new SnakeNamingStrategy(),
       entities: [],
     }),
+    JwtModule.forRoot({
+      jwtPrivateKey: process.env.JWT_PRIVATE_KEY,
+      jwtExpiresSec: process.env.JWT_EXPIRES_SEC,
+      refreshExpiresSec: process.env.REFRESH_EXPIRES_SEC,
+    }),
+    LoggerModule.forRoot({
+      nodeEnv: process.env.NODE_ENV,
+    }),
     MulterModule.register({
       dest: './files',
     }),
@@ -50,5 +64,13 @@ import { UsersModule } from './users/users.module';
       useClass: AppService,
     },
   ],
+  exports: ['IAppService'],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(JwtMiddleware).forRoutes({
+      path: '/users/*',
+      method: RequestMethod.ALL,
+    });
+  }
+}

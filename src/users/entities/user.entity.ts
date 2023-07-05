@@ -1,8 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsBoolean, IsEmail, IsOptional, IsPhoneNumber, IsString, Matches } from 'class-validator';
+import { IsBoolean, IsEmail, IsEnum, IsJWT, IsOptional, IsPhoneNumber, IsString, Matches } from 'class-validator';
 import { CoreEntity } from 'src/common/entities/core.entity';
-import { Column, Entity, Index } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity, Index } from 'typeorm';
+import * as bcrypt from 'bcrypt';
+import { InternalServerErrorException } from '@nestjs/common';
 
 export enum UserRole {
   Admin = 'Admin',
@@ -52,4 +54,44 @@ export class User extends CoreEntity {
   @IsOptional()
   @ApiProperty({ example: '한국', description: '주소' })
   address?: string;
+
+  @Column('enum', { enum: UserRole, default: UserRole.User, nullable: false, comment: '유저 권한' })
+  @IsEnum(UserRole, { message: '유저 권한이 정확하지 않습니다.' })
+  @ApiProperty({ example: 'User', enum: UserRole, description: '유저 권한' })
+  role: UserRole;
+
+  @Column('varchar', { default: '', nullable: true, comment: '유저 토큰' })
+  @IsOptional()
+  @IsJWT({ message: '토큰이 정확하지 않습니다.' })
+  @ApiProperty({ example: 'token', description: '유저 토큰' })
+  refreshToken?: string;
+
+  @Column('boolean', { default: false, nullable: true })
+  @ApiProperty({ example: false, description: '이메일 인증 여부' })
+  @IsOptional()
+  @IsBoolean({ message: '이메일 인증 여부는 불리언 타입이어야 합니다.' })
+  verified?: boolean;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  async hashPassword(): Promise<boolean> {
+    if (this.password) {
+      try {
+        this.password = await bcrypt.hash(this.password, 10);
+        return true;
+      } catch (error) {
+        new InternalServerErrorException();
+      }
+    }
+  }
+
+  async checkPassword(aPassword: string): Promise<boolean> {
+    try {
+      const ok = await bcrypt.compare(aPassword, this.password);
+      return ok;
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException();
+    }
+  }
 }

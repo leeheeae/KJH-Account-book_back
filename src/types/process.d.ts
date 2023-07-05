@@ -10,5 +10,8 @@ declare namespace NodeJS {
     DB_USERNAME: string;
     DB_PASSWORD: string;
     DB_DATABASE: string;
+    JWT_PRIVATE_KEY: string;
+    JWT_EXPIRES_SEC: string;
+    REFRESH_EXPIRES_SEC: string;
   }
 }
