@@ -66,7 +66,7 @@ export class User extends CoreEntity {
   @ApiProperty({ example: 'token', description: '유저 토큰' })
   refreshToken?: string;
 
-  @Column('boolean', { default: false, nullable: true })
+  @Column('boolean', { default: false, nullable: true, comment: '이메일 인증 여부' })
   @ApiProperty({ example: false, description: '이메일 인증 여부' })
   @IsOptional()
   @IsBoolean({ message: '이메일 인증 여부는 불리언 타입이어야 합니다.' })

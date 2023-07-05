@@ -11,8 +11,14 @@ export class FindByEmailInput {
 }
 
 export class FindByEmailOutput extends CoreOutput {
-  @ApiProperty({ example: USER_SUCCESS_RESPONSE.getFindByEmail.example.user })
-  @IsObject({ message: '유저는 객체이어야 합니다.' })
+  @ApiProperty({
+    example: {
+      user: USER_SUCCESS_RESPONSE.getFindByEmail.example.user,
+    },
+  })
+  @IsObject({ message: '데이터는 객체여야 합니다.' })
   @IsOptional()
-  user?: User;
+  data?: {
+    user: User;
+  };
 }

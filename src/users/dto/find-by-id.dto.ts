@@ -11,8 +11,14 @@ export class FindByIdInput {
 }
 
 export class FindByIdOutput extends CoreOutput {
-  @ApiProperty({ example: USER_SUCCESS_RESPONSE.getFindById.example.user })
-  @IsObject({ message: '유저는 객체이어야 합니다.' })
+  @ApiProperty({
+    example: {
+      user: USER_SUCCESS_RESPONSE.getFindById.example.user,
+    },
+  })
+  @IsObject({ message: '데이터는 객체이어야 합니다.' })
   @IsOptional()
-  user?: User;
+  data?: {
+    user: User;
+  };
 }

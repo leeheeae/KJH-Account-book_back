@@ -48,7 +48,9 @@ export class JwtMiddleware implements NestMiddleware {
         // 3. 데이터베이스에 있는 refreshToken이 만료가 되어 있지 않았을때는 decoded 하여 보내줍니다
         // 4. 만약에 데이터베이스에 있는 refreshToken 까지 만료되었다면 error 를 return 합니다
 
-        const { user } = await this.userService.getFindByEmail(email as string);
+        const {
+          data: { user },
+        } = await this.userService.getFindByEmail(email as string);
         try {
           const isCheckedEmailToken = await bcrypt.compare(user.refreshToken, refreshToken as string);
 
@@ -80,7 +82,10 @@ export class JwtMiddleware implements NestMiddleware {
       }
 
       try {
-        const { user, ok } = await this.userService.getFindById(decoded['id']);
+        const {
+          data: { user },
+          ok,
+        } = await this.userService.getFindById(decoded['id']);
         // 만약에 이미 refreshToken 이 있는것을 social 로그인 할때 저장을 안해주면 여기서 에러 발생
         const isCheckedIdToken = await bcrypt.compare(user.refreshToken, refreshToken as string);
         if (!ok || !isCheckedIdToken) {

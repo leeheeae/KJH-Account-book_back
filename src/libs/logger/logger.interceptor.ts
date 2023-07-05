@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { LoggerService } from './logger.service';
 import * as chalk from 'chalk';
+import * as _ from 'lodash';
 export interface Response<T> {
   data: T;
 }
@@ -14,12 +15,11 @@ export class LoggerInterceptor<T> implements NestInterceptor<T, Response<T>> {
     const httpMethodName = context.switchToHttp().getRequest().method;
     return next.handle().pipe(
       map(data => {
-        if (!data?.message?.text) {
-          return data;
-        }
+        if (_.isEmpty(data?.message?.text)) return data;
+
         const { text, statusCode } = data.message;
 
-        if (typeof data === 'object' && data.hasOwnProperty('ok') && data.hasOwnProperty('error')) {
+        if (_.isEqual(typeof data, 'object') && _.has(data, 'ok') && _.has(data, 'message')) {
           if (data.ok) {
             data.error = null;
             const colorHttpMethod = chalk.yellow(`${httpMethodName}`);

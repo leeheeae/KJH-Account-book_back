@@ -12,6 +12,7 @@ import { UsersModule } from './users/users.module';
 import { JwtMiddleware } from './libs/jwt/jwt.middleware';
 import { JwtModule } from './libs/jwt/jwt.module';
 import { LoggerModule } from './libs/logger/logger.module';
+import { User } from './users/entities/user.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -41,7 +42,7 @@ import { LoggerModule } from './libs/logger/logger.module';
       synchronize: process.env.NODE_ENV !== PROD,
       keepConnectionAlive: false,
       namingStrategy: new SnakeNamingStrategy(),
-      entities: [],
+      entities: [User],
     }),
     JwtModule.forRoot({
       jwtPrivateKey: process.env.JWT_PRIVATE_KEY,

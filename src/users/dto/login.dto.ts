@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsEmail, IsJWT, IsOptional, IsString, Matches } from 'class-validator';
+import { IsEmail, IsObject, IsOptional, IsString, Matches } from 'class-validator';
 import { CoreOutput } from 'src/common/dto/output.dto';
 
 export class LoginInput {
@@ -16,15 +16,17 @@ export class LoginInput {
 }
 
 export class LoginOutput extends CoreOutput {
-  @ApiProperty({ example: 'token', description: '토큰' })
+  @ApiProperty({
+    example: {
+      token: 'token',
+      refreshToken: 'refreshToken',
+    },
+    description: '토큰과 리프레시 토큰',
+  })
   @IsOptional()
-  @IsString({ message: '토큰은 문자열이어야 합니다.' })
-  @IsJWT({ message: '토큰이 유효하지 않습니다.' })
-  token?: string;
-
-  @ApiProperty({ example: 'refreshToken', description: '리프레시 토큰' })
-  @IsOptional()
-  @IsString({ message: '리프레시 토큰은 문자열이어야 합니다.' })
-  @IsJWT({ message: '리프레시 토큰이 유효하지 않습니다.' })
-  refreshToken?: string;
+  @IsObject({ message: '토큰과 리프레시 토큰은 객체여야 합니다.' })
+  data?: {
+    token?: string;
+    refreshToken?: string;
+  };
 }

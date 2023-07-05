@@ -8,6 +8,8 @@ import * as expressBasicAuth from 'express-basic-auth';
 import { DEV } from './common/constants/common.constant';
 import { ValidationPipe } from '@nestjs/common';
 import { setupSwagger } from './common/utils/setup-swagger';
+import { LoggerService } from './libs/logger/logger.service';
+import { LoggerInterceptor } from './libs/logger/logger.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -21,7 +23,7 @@ async function bootstrap() {
   }
 
   const PORT = process.env.NODE_ENV === DEV ? 5000 : 3000;
-  // const log = new LoggerService({ nodeEnv: process.env.NODE_ENV });
+  const log = new LoggerService({ nodeEnv: process.env.NODE_ENV });
 
   app.use(
     '/api-docs',
@@ -35,6 +37,8 @@ async function bootstrap() {
   setupSwagger(app);
   app.use('/files', express.static(join(__dirname, '../files')));
 
+  app.useGlobalInterceptors(new LoggerInterceptor(log));
+  app.setGlobalPrefix('api');
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,

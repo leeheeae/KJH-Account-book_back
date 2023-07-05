@@ -51,7 +51,9 @@ export class UsersService implements IUsersService {
       return {
         ok: true,
         message: { text: USER_SUCCESS.getFindById.text, statusCode: HttpStatus.OK },
-        user,
+        data: {
+          user,
+        },
       };
     } catch (error) {
       // ! extraError
@@ -75,7 +77,7 @@ export class UsersService implements IUsersService {
           text: USER_SUCCESS.getFindByEmail.text,
           statusCode: HttpStatus.OK,
         },
-        user,
+        data: { user },
       };
     } catch (error) {
       // ! extraError
@@ -178,21 +180,22 @@ export class UsersService implements IUsersService {
         };
       }
 
-      if (!user.verified) {
-        return {
-          ok: false,
-          error: new Error(USER_ERROR.notVerifiedUser.error),
-          message: {
-            text: USER_ERROR.notVerifiedUser.text,
-            statusCode: HttpStatus.BAD_REQUEST,
-          },
-        };
-      }
+      // todo : 이메일 인증 기능 추가
+      //   if (!user.verified) {
+      //     return {
+      //       ok: false,
+      //       error: new Error(USER_ERROR.notVerifiedUser.error),
+      //       message: {
+      //         text: USER_ERROR.notVerifiedUser.text,
+      //         statusCode: HttpStatus.BAD_REQUEST,
+      //       },
+      //     };
+      //   }
 
       delete user.password;
       const token = this.jwtService.sign({ id: user.id });
 
-      const refreshToken = this.jwtService.refreshSign({});
+      const refreshToken = this.jwtService.refreshSign({ id: user.id });
 
       const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
 
@@ -202,11 +205,13 @@ export class UsersService implements IUsersService {
       //* success
       return {
         ok: true,
-        token,
-        refreshToken: hashedRefreshToken,
         message: {
           text: USER_SUCCESS.postLogin.text,
           statusCode: HttpStatus.OK,
+        },
+        data: {
+          token,
+          refreshToken: hashedRefreshToken,
         },
       };
     } catch (error) {
