@@ -1,6 +1,6 @@
 import { HttpStatus } from '@nestjs/common';
 export const USER_ERROR_RESPONSE = {
-  postJoin: {
+  join: {
     badRequest: {
       example: {
         ok: false,
@@ -22,7 +22,7 @@ export const USER_ERROR_RESPONSE = {
       },
     },
   },
-  postLogin: {
+  login: {
     badRequest: {
       example: {
         ok: false,

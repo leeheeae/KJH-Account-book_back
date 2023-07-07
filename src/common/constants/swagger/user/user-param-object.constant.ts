@@ -1,6 +1,6 @@
 export const USER_PARAM_OBJECT = {
-  // ! [getFindById] 에 대한 Param
-  getFindById: {
+  // ! [findById] 에 대한 Param
+  findById: {
     name: 'id',
     description: '소유자 id',
     required: true,

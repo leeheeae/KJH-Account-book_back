@@ -3,7 +3,7 @@ import { IUsersService } from './interface/user-service.interface';
 import * as winston from 'winston';
 import * as chalk from 'chalk';
 import * as bcrypt from 'bcrypt';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { IJwtService } from 'src/libs/jwt/interface/jwt-service.interface';
 import { ILoggerService } from 'src/libs/logger/interface/logger-service.interface';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -23,7 +23,6 @@ export class UsersService implements IUsersService {
     @Inject('IJwtService') private readonly jwtService: IJwtService,
     @Inject('ILoggerService') private readonly log: ILoggerService,
     @InjectRepository(User) private readonly usersRepository: UsersRepository,
-    @InjectRepository(User) private readonly users: Repository<User>,
   ) {}
   successLogger(service: { name: string }, method: string, message: string): winston.Logger {
     const colorServiceName = chalk.yellow(`${service.name}`);
@@ -137,7 +136,7 @@ export class UsersService implements IUsersService {
       return {
         ok: true,
         message: {
-          text: USER_SUCCESS.postLogin.text,
+          text: USER_SUCCESS.login.text,
           statusCode: HttpStatus.OK,
         },
         data: {

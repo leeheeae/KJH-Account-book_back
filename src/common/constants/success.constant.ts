@@ -8,7 +8,7 @@ export const USER_SUCCESS = {
   join: {
     text: '회원가입 성공',
   },
-  postLogin: {
+  login: {
     text: '로그인 성공',
   },
 } as const;

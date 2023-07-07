@@ -1,7 +1,7 @@
 import { HttpStatus } from '@nestjs/common';
 // ! USER RESPONSE
 export const USER_SUCCESS_RESPONSE = {
-  getFindById: {
+  findById: {
     example: {
       ok: true,
       message: {
@@ -23,7 +23,7 @@ export const USER_SUCCESS_RESPONSE = {
       },
     },
   },
-  getFindByEmail: {
+  findByEmail: {
     example: {
       ok: true,
       message: {
@@ -45,8 +45,8 @@ export const USER_SUCCESS_RESPONSE = {
       },
     },
   },
-  // ! [postJoin] 에 대한 Response
-  postJoin: {
+  // ! [join] 에 대한 Response
+  join: {
     example: {
       ok: true,
       message: {
@@ -55,8 +55,8 @@ export const USER_SUCCESS_RESPONSE = {
       },
     },
   },
-  // ! [postLogin] 에 대한 Response
-  postLogin: {
+  // ! [login] 에 대한 Response
+  login: {
     example: {
       ok: true,
       message: {

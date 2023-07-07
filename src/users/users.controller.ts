@@ -19,13 +19,13 @@ export class UsersController {
   @Get('/owner')
   @UseFilters(AuthForbiddenException)
   @ApiOperation({
-    summary: USER_OPERATION.getFindById.summary,
-    description: USER_OPERATION.getFindById.description,
+    summary: USER_OPERATION.findById.summary,
+    description: USER_OPERATION.findById.description,
   })
   // * 성공 케이스
   @ApiOkResponse({
     description: USER_SUCCESS.findById.text,
-    schema: USER_SUCCESS_RESPONSE.getFindById,
+    schema: USER_SUCCESS_RESPONSE.findById,
     status: HttpStatus.OK,
     type: FindByIdOutput,
   })
@@ -34,9 +34,9 @@ export class UsersController {
     description: COMMON_ERROR.extraError.text,
     schema: USER_ERROR_RESPONSE.internalServerError,
   })
-  @ApiParam(USER_PARAM_OBJECT.getFindById)
+  @ApiParam(USER_PARAM_OBJECT.findById)
   @HttpCode(HttpStatus.OK)
-  async getFindById(@AuthUser() authUser: User): Promise<FindByIdOutput> {
+  async findById(@AuthUser() authUser: User): Promise<FindByIdOutput> {
     return this.userService.findById(authUser.id);
   }
 }

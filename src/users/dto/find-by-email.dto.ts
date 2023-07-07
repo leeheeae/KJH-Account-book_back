@@ -13,7 +13,7 @@ export class FindByEmailInput {
 export class FindByEmailOutput extends CoreOutput {
   @ApiProperty({
     example: {
-      user: USER_SUCCESS_RESPONSE.getFindByEmail.example.user,
+      user: USER_SUCCESS_RESPONSE.findByEmail.example.user,
     },
   })
   @IsObject({ message: '데이터는 객체여야 합니다.' })

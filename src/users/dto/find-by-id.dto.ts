@@ -13,7 +13,7 @@ export class FindByIdInput {
 export class FindByIdOutput extends CoreOutput {
   @ApiProperty({
     example: {
-      user: USER_SUCCESS_RESPONSE.getFindById.example.user,
+      user: USER_SUCCESS_RESPONSE.findById.example.user,
     },
   })
   @IsObject({ message: '데이터는 객체이어야 합니다.' })

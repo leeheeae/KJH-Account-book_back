@@ -33,23 +33,23 @@ export class AppController {
 
   // ! 회원가입 API [성공 & 실패 케이스 완료]
   @Post('/join')
-  @ApiOperation({ summary: USER_OPERATION.postJoin.summary, description: USER_OPERATION.postJoin.description })
+  @ApiOperation({ summary: USER_OPERATION.join.summary, description: USER_OPERATION.join.description })
   // * 성공 케이스
   @ApiOkResponse({
     description: USER_SUCCESS.join.text,
-    schema: USER_SUCCESS_RESPONSE.postJoin,
+    schema: USER_SUCCESS_RESPONSE.join,
     status: HttpStatus.OK,
     type: JoinOutput,
   })
   // ? 401 에러 케이스
   @ApiUnauthorizedResponse({
     description: USER_ERROR.notMatchedPasswords.text,
-    schema: USER_ERROR_RESPONSE.postJoin.unauthorized,
+    schema: USER_ERROR_RESPONSE.join.unauthorized,
   })
   // ? 400 에러 케이스
   @ApiBadRequestResponse({
     description: USER_ERROR.existUser.text,
-    schema: USER_ERROR_RESPONSE.postJoin.badRequest,
+    schema: USER_ERROR_RESPONSE.join.badRequest,
   })
   // ? 500 에러 케이스
   @ApiInternalServerErrorResponse({
@@ -58,34 +58,34 @@ export class AppController {
   })
   // 요청 바디
   @ApiBody({
-    description: USER_BODY_DESCRIPTION.postJoin.description,
-    schema: USER_BODY_OBJECT.postJoin,
+    description: USER_BODY_DESCRIPTION.join.description,
+    schema: USER_BODY_OBJECT.join,
     type: JoinInput,
   })
   @HttpCode(HttpStatus.OK)
-  async postJoin(@Body() joinInput: JoinInput): Promise<JoinOutput> {
+  async join(@Body() joinInput: JoinInput): Promise<JoinOutput> {
     return this.userService.join(joinInput);
   }
 
   // ! 로그인 API [성공 & 실패 케이스 완료]
   @Post('/login')
-  @ApiOperation({ summary: USER_OPERATION.postLogin.summary, description: USER_OPERATION.postLogin.description })
+  @ApiOperation({ summary: USER_OPERATION.login.summary, description: USER_OPERATION.login.description })
   // * 성공 케이스
   @ApiOkResponse({
-    description: USER_SUCCESS.postLogin.text,
-    schema: USER_SUCCESS_RESPONSE.postLogin,
+    description: USER_SUCCESS.login.text,
+    schema: USER_SUCCESS_RESPONSE.login,
     status: HttpStatus.OK,
     type: LoginOutput,
   })
   // ? 400 에러 케이스
   @ApiBadRequestResponse({
     description: USER_ERROR.notExistUser.text,
-    schema: USER_ERROR_RESPONSE.postLogin.badRequest,
+    schema: USER_ERROR_RESPONSE.login.badRequest,
   })
   // ? 401 에러 케이스
   @ApiUnauthorizedResponse({
     description: USER_ERROR.wrongPassword.text,
-    schema: USER_ERROR_RESPONSE.postLogin.unauthorized,
+    schema: USER_ERROR_RESPONSE.login.unauthorized,
   })
   // ? 500 에러 케이스
   @ApiInternalServerErrorResponse({
@@ -94,12 +94,12 @@ export class AppController {
   })
   // 요청 바디
   @ApiBody({
-    description: USER_BODY_DESCRIPTION.postLogin.description,
-    schema: USER_BODY_OBJECT.postLogin,
+    description: USER_BODY_DESCRIPTION.login.description,
+    schema: USER_BODY_OBJECT.login,
     type: LoginInput,
   })
   @HttpCode(HttpStatus.OK)
-  async postLogin(@Body() loginInput: LoginInput): Promise<LoginOutput> {
+  async login(@Body() loginInput: LoginInput): Promise<LoginOutput> {
     return this.userService.login(loginInput);
   }
 }
