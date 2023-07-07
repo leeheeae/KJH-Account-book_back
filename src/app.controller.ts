@@ -36,7 +36,7 @@ export class AppController {
   @ApiOperation({ summary: USER_OPERATION.postJoin.summary, description: USER_OPERATION.postJoin.description })
   // * 성공 케이스
   @ApiOkResponse({
-    description: USER_SUCCESS.postJoin.text,
+    description: USER_SUCCESS.join.text,
     schema: USER_SUCCESS_RESPONSE.postJoin,
     status: HttpStatus.OK,
     type: JoinOutput,
@@ -64,7 +64,7 @@ export class AppController {
   })
   @HttpCode(HttpStatus.OK)
   async postJoin(@Body() joinInput: JoinInput): Promise<JoinOutput> {
-    return this.userService.postJoin(joinInput);
+    return this.userService.join(joinInput);
   }
 
   // ! 로그인 API [성공 & 실패 케이스 완료]
@@ -100,6 +100,6 @@ export class AppController {
   })
   @HttpCode(HttpStatus.OK)
   async postLogin(@Body() loginInput: LoginInput): Promise<LoginOutput> {
-    return this.userService.postLogin(loginInput);
+    return this.userService.login(loginInput);
   }
 }

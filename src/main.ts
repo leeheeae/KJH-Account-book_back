@@ -22,7 +22,7 @@ async function bootstrap() {
     if (!fs.existsSync(fileFolder)) fs.mkdirSync(fileFolder);
   }
 
-  const PORT = process.env.NODE_ENV === DEV ? 5000 : 3000;
+  const PORT = process.env.NODE_ENV === DEV ? 8000 : 3000;
   const log = new LoggerService({ nodeEnv: process.env.NODE_ENV });
 
   app.use(

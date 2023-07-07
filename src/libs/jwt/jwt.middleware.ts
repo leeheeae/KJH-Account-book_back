@@ -50,7 +50,7 @@ export class JwtMiddleware implements NestMiddleware {
 
         const {
           data: { user },
-        } = await this.userService.getFindByEmail(email as string);
+        } = await this.userService.findByEmail(email as string);
         try {
           const isCheckedEmailToken = await bcrypt.compare(user.refreshToken, refreshToken as string);
 
@@ -85,7 +85,7 @@ export class JwtMiddleware implements NestMiddleware {
         const {
           data: { user },
           ok,
-        } = await this.userService.getFindById(decoded['id']);
+        } = await this.userService.findById(decoded['id']);
         // 만약에 이미 refreshToken 이 있는것을 social 로그인 할때 저장을 안해주면 여기서 에러 발생
         const isCheckedIdToken = await bcrypt.compare(user.refreshToken, refreshToken as string);
         if (!ok || !isCheckedIdToken) {

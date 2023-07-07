@@ -24,7 +24,7 @@ export class UsersController {
   })
   // * 성공 케이스
   @ApiOkResponse({
-    description: USER_SUCCESS.getFindById.text,
+    description: USER_SUCCESS.findById.text,
     schema: USER_SUCCESS_RESPONSE.getFindById,
     status: HttpStatus.OK,
     type: FindByIdOutput,
@@ -37,6 +37,6 @@ export class UsersController {
   @ApiParam(USER_PARAM_OBJECT.getFindById)
   @HttpCode(HttpStatus.OK)
   async getFindById(@AuthUser() authUser: User): Promise<FindByIdOutput> {
-    return this.userService.getFindById(authUser.id);
+    return this.userService.findById(authUser.id);
   }
 }

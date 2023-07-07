@@ -6,8 +6,8 @@ import { FindByIdOutput } from '../dto/find-by-id.dto';
 
 export interface IUsersService {
   successLogger: (service: { name: string }, method: string, message: string) => winston.Logger;
-  getFindById(userId: number): Promise<FindByIdOutput>;
-  getFindByEmail: (email: string) => Promise<FindByEmailOutput>;
-  postJoin: (joinInput: JoinInput) => Promise<JoinOutput>;
-  postLogin: (loginInput: LoginInput) => Promise<LoginOutput>;
+  findById(userId: number): Promise<FindByIdOutput>;
+  findByEmail: (email: string) => Promise<FindByEmailOutput>;
+  join: (joinInput: JoinInput) => Promise<JoinOutput>;
+  login: (loginInput: LoginInput) => Promise<LoginOutput>;
 }
