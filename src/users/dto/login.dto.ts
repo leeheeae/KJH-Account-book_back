@@ -26,7 +26,7 @@ export class LoginOutput extends CoreOutput {
   @IsOptional()
   @IsObject({ message: '토큰과 리프레시 토큰은 객체여야 합니다.' })
   data?: {
-    token?: string;
-    refreshToken?: string;
+    token: string;
+    refreshToken: string;
   };
 }
