@@ -13,6 +13,7 @@ import { JwtMiddleware } from './libs/jwt/jwt.middleware';
 import { JwtModule } from './libs/jwt/jwt.module';
 import { LoggerModule } from './libs/logger/logger.module';
 import { User } from './users/entities/user.entity';
+import { I_APP_SERVICE } from './common/constants/service/service.constant';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -61,11 +62,11 @@ import { User } from './users/entities/user.entity';
   controllers: [AppController],
   providers: [
     {
-      provide: 'IAppService',
+      provide: I_APP_SERVICE,
       useClass: AppService,
     },
   ],
-  exports: ['IAppService'],
+  exports: [I_APP_SERVICE],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

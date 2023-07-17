@@ -11,10 +11,11 @@ import { USER_ERROR_RESPONSE } from 'src/common/constants/swagger/user/user-erro
 import { USER_PARAM_OBJECT } from 'src/common/constants/swagger/user/user-param-object.constant';
 import { AuthUser } from 'src/libs/auth/auth-user.decorator';
 import { User } from './entities/user.entity';
+import { I_USERS_SERVICE } from 'src/common/constants/service/service.constant';
 
 @Controller('users')
 export class UsersController {
-  constructor(@Inject('IUsersService') private readonly userService: IUsersService) {}
+  constructor(@Inject(I_USERS_SERVICE) private readonly userService: IUsersService) {}
   // ! 소유자 호출 API [성공 & 실패 케이스 완료]
   @Get('/owner')
   @UseFilters(AuthForbiddenException)

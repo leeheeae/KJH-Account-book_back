@@ -15,13 +15,14 @@ import { JoinInput, JoinOutput } from './dto/join.dto';
 import { LoginInput, LoginOutput } from './dto/login.dto';
 import { FindByIdOutput } from './dto/find-by-id.dto';
 import { UsersRepository } from './repository/users.repository';
+import { I_JWT_SERVICE, I_LOGGER_SERVICE } from 'src/common/constants/service/service.constant';
 
 @Injectable()
 export class UsersService implements IUsersService {
   constructor(
     private readonly dataSource: DataSource,
-    @Inject('IJwtService') private readonly jwtService: IJwtService,
-    @Inject('ILoggerService') private readonly log: ILoggerService,
+    @Inject(I_JWT_SERVICE) private readonly jwtService: IJwtService,
+    @Inject(I_LOGGER_SERVICE) private readonly log: ILoggerService,
     @InjectRepository(User) private readonly usersRepository: UsersRepository,
   ) {}
   successLogger(service: { name: string }, method: string, message: string): winston.Logger {

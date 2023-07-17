@@ -13,7 +13,7 @@ export const USER_ERROR = {
   },
   wrongPassword: {
     error: 'wrongPassword',
-    text: '비밀번호가 잘못 되었습니다.',
+    text: '비밀번호가 일치하지 않습니다.',
   },
   notExistVerification: {
     error: 'notExistVerification',

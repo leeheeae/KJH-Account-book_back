@@ -18,12 +18,13 @@ import { JoinInput, JoinOutput } from './users/dto/join.dto';
 import { LoginInput, LoginOutput } from './users/dto/login.dto';
 import { USER_SUCCESS } from './common/constants/success.constant';
 import { IUsersService } from './users/interface/user-service.interface';
+import { I_APP_SERVICE, I_USERS_SERVICE } from './common/constants/service/service.constant';
 
 @Controller()
 export class AppController {
   constructor(
-    @Inject('IUsersService') private readonly userService: IUsersService,
-    @Inject('IAppService') private readonly appService: IAppService,
+    @Inject(I_USERS_SERVICE) private readonly userService: IUsersService,
+    @Inject(I_APP_SERVICE) private readonly appService: IAppService,
   ) {}
 
   @Get()

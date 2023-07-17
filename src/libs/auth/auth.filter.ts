@@ -1,9 +1,10 @@
 import { ArgumentsHost, Catch, ForbiddenException, HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { ILoggerService } from '../logger/interface/logger-service.interface';
+import { I_LOGGER_SERVICE } from 'src/common/constants/service/service.constant';
 
 @Catch(ForbiddenException)
 export class AuthForbiddenException extends HttpException {
-  constructor(@Inject('ILoggerService') private readonly log: ILoggerService) {
+  constructor(@Inject(I_LOGGER_SERVICE) private readonly log: ILoggerService) {
     super('Forbidden', HttpStatus.FORBIDDEN);
   }
 

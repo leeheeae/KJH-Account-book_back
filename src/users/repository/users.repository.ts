@@ -4,6 +4,7 @@ import { BadRequestException, HttpException } from '@nestjs/common';
 import { JoinInput } from '../dto/join.dto';
 import { LoginInput } from '../dto/login.dto';
 import * as bcrypt from 'bcrypt';
+import { USER_ERROR } from 'src/common/constants/error.constant';
 
 export class UsersRepository extends Repository<User> {
   async findById(id: number): Promise<User> {
@@ -34,7 +35,7 @@ export class UsersRepository extends Repository<User> {
     try {
       if (password !== confirmationPassword) {
         throw new BadRequestException({
-          message: '비밀번호가 일치하지 않습니다.',
+          message: USER_ERROR.notMatchedPasswords,
         });
       }
 
@@ -42,7 +43,7 @@ export class UsersRepository extends Repository<User> {
 
       if (exists) {
         throw new BadRequestException({
-          message: '이미 존재하는 이메일입니다.',
+          message: USER_ERROR.existUser,
         });
       }
 
@@ -64,7 +65,7 @@ export class UsersRepository extends Repository<User> {
 
       if (!user) {
         throw new BadRequestException({
-          message: '존재하지 않는 이메일입니다.',
+          message: USER_ERROR.notExistUser,
         });
       }
 
@@ -72,7 +73,7 @@ export class UsersRepository extends Repository<User> {
 
       if (!passwordCorrect) {
         throw new BadRequestException({
-          message: '비밀번호가 일치하지 않습니다.',
+          message: USER_ERROR.wrongPassword,
         });
       }
 
