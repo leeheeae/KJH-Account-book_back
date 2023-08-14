@@ -1,6 +1,5 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import * as express from 'express';
 import * as fs from 'fs';
@@ -12,7 +11,7 @@ import { LoggerService } from './libs/logger/logger.service';
 import { LoggerInterceptor } from './libs/logger/logger.interceptor';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+  const app = await NestFactory.create(AppModule, {
     cors: true,
   });
 
