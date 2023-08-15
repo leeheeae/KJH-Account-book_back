@@ -49,7 +49,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FindByIdTryCatch_lt_IFindByIdOutput_comma__space_IErrorResponse_lt_string_gt__gt_"
+                  "$ref": "#/components/schemas/FindByIdTryCatch_lt_IFindByIdOutput_comma__space_IErrorResponse_lt__doublequote_NOT_FOUND_USER_doublequote__gt__gt_"
                 }
               }
             },
@@ -186,6 +186,33 @@
                 "kind": "text"
               }
             ]
+          },
+          {
+            "name": "returns",
+            "text": [
+              {
+                "text": "ILoginOutputData",
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "name": "throws",
+            "text": [
+              {
+                "text": "LOGIN_ERROR.NOT_EXIST_USER",
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "name": "throws",
+            "text": [
+              {
+                "text": "LOGIN_ERROR.IS_NOT_VALID_PASSWORD",
+                "kind": "text"
+              }
+            ]
           }
         ],
         "x-nestia-method": "POST"
@@ -277,17 +304,17 @@
   },
   "components": {
     "schemas": {
-      "FindByIdTryCatch_lt_IFindByIdOutput_comma__space_IErrorResponse_lt_string_gt__gt_": {
+      "FindByIdTryCatch_lt_IFindByIdOutput_comma__space_IErrorResponse_lt__doublequote_NOT_FOUND_USER_doublequote__gt__gt_": {
         "oneOf": [
           {
-            "$ref": "#/components/schemas/IErrorResponse_lt_string_gt_"
+            "$ref": "#/components/schemas/IErrorResponse_lt__doublequote_NOT_FOUND_USER_doublequote__gt_"
           },
           {
             "$ref": "#/components/schemas/ISuccessResponse_lt_IFindByIdOutput_gt_"
           }
         ]
       },
-      "IErrorResponse_lt_string_gt_": {
+      "IErrorResponse_lt__doublequote_NOT_FOUND_USER_doublequote__gt_": {
         "type": "object",
         "properties": {
           "success": {
@@ -304,7 +331,10 @@
           "data": {
             "x-typia-required": true,
             "x-typia-optional": false,
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "NOT_FOUND_USER"
+            ]
           }
         },
         "nullable": false,

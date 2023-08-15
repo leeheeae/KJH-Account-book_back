@@ -9,7 +9,7 @@ import {
   JoinValueError,
   LoginValueError,
 } from '../common/response/try-catch/try-catch.response';
-import { FIND_BY_ID_ERROR, REGISTER_ERROR } from '../common/response/error/user-error.response';
+import { FIND_BY_ID_ERROR, JOIN_ERROR } from '../common/response/error/user-error.response';
 import { Inject, Injectable } from '@nestjs/common';
 import { ILoginInput, ILoginOutputData } from './dto/login.dto';
 import { FindByEmailTryCatch, LoginTryCatch } from 'src/common/response/try-catch/try-catch.response';
@@ -105,7 +105,7 @@ export class UsersService implements IUsersService {
     const { email } = registerInput;
     const existUser = await this.userRepository.findByEmail({ email });
 
-    if (existUser) return REGISTER_ERROR.ALREADY_EXIST_USER;
+    if (existUser) return JOIN_ERROR.ALREADY_EXIST_USER;
 
     await this.userRepository.register(registerInput);
 

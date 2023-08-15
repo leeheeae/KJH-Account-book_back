@@ -21,6 +21,7 @@ export class UsersController {
    *
    * @tag User
    * @summary 유저 아이디로 유저 찾기 API (로그인 필요)
+   * @throws FIND_BY_ID_ERROR.NOT_FOUND_USER
    */
   @TypedRoute.Post('owner')
   async findById(@AuthUser() authUser: User): Promise<FindByIdTryCatch<IFindByIdOutput, FindByIdValueError>> {
@@ -34,6 +35,8 @@ export class UsersController {
    *
    * @tag User
    * @summary 로그인 API
+   * @throws LOGIN_ERROR.NOT_EXIST_USER
+   * @throws LOGIN_ERROR.IS_NOT_VALID_PASSWORD
    */
   @TypedRoute.Post('login')
   async login(@TypedBody() loginInput: ILoginInput): Promise<LoginTryCatch<ILoginOutputData, LoginValueError>> {
@@ -47,6 +50,7 @@ export class UsersController {
    *
    * @tag User
    * @summary 회원가입 API
+   * @throws JOIN_ERROR.ALREADY_EXIST_EMAIL
    */
   @TypedRoute.Post('join')
   async join(@TypedBody() joinInput: IJoinInput): Promise<JoinTryCatch<null, JoinValueError>> {

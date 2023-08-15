@@ -1,4 +1,4 @@
-import { FIND_BY_EMAIL_ERROR, FIND_BY_ID_ERROR, LOGIN_ERROR, REGISTER_ERROR } from '../error/user-error.response';
+import { FIND_BY_EMAIL_ERROR, FIND_BY_ID_ERROR, LOGIN_ERROR, JOIN_ERROR } from '../error/user-error.response';
 import { ISuccessResponse } from '../interface/success.interface';
 
 export type Try<T> = ISuccessResponse<T>;
@@ -19,6 +19,6 @@ export type FindByEmailValueError = FindByEmailError[keyof FindByEmailError];
 export type FindByEmailTryCatch<T, E extends FindByEmailValueError> = ISuccessResponse<T> | E;
 
 // * REGISTER_ERROR | 회원가입 에러 상수
-export type JoinError = Pick<typeof REGISTER_ERROR, keyof typeof REGISTER_ERROR>;
+export type JoinError = Pick<typeof JOIN_ERROR, keyof typeof JOIN_ERROR>;
 export type JoinValueError = JoinError[keyof JoinError];
 export type JoinTryCatch<T, E extends JoinValueError> = ISuccessResponse<T> | E;

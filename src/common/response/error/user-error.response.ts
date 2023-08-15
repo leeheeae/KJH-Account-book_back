@@ -41,7 +41,7 @@ export const FIND_BY_ID_ERROR: Record<string, IErrorResponse<'NOT_FOUND_USER'>> 
   },
 };
 
-export const REGISTER_ERROR: Record<string, IErrorResponse<'ALREADY_EXIST_USER'>> = {
+export const JOIN_ERROR: Record<string, IErrorResponse<'ALREADY_EXIST_USER'>> = {
   ALREADY_EXIST_USER: {
     success: false,
     message: {
