@@ -37,7 +37,6 @@ async function bootstrap() {
   app.use('/files', express.static(join(__dirname, '../files')));
 
   app.useGlobalInterceptors(new LoggerInterceptor(log));
-  app.setGlobalPrefix('api');
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
