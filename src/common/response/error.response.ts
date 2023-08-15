@@ -1,14 +1,19 @@
 import { HttpStatus } from '@nestjs/common';
 import { COMMON_ERROR } from '../constants/error.constant';
 
-export const resultError = (error: unknown) => {
-  const typedError = error as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+interface IResultError {
+  error: string;
+  text?: string;
+  statusCode?: number;
+}
+
+export const resultError = ({ error, text, statusCode }: IResultError) => {
   return {
     ok: false,
-    error: new Error(typedError?.response ? typedError?.response?.text : typedError),
+    error: new Error(error),
     message: {
-      text: typedError?.response?.text ? typedError?.response?.text : COMMON_ERROR.extraError.text,
-      statusCode: typedError?.response?.error ? typedError?.response?.error : HttpStatus.INTERNAL_SERVER_ERROR,
+      text: text ? text : COMMON_ERROR.extraError.text,
+      statusCode: statusCode ? statusCode : HttpStatus.INTERNAL_SERVER_ERROR,
     },
   };
 };

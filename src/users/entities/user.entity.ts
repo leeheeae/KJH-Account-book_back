@@ -13,7 +13,7 @@ export enum UserRole {
 
 @Entity()
 export class User extends CoreEntity {
-  @Column('varchar', { length: 255, nullable: false, unique: true, comment: '유저 이메일' })
+  @Column('varchar', { length: 255, nullable: false, comment: '유저 이메일' })
   @ApiProperty({ example: 'animalBack@naver.com', description: '이메일' })
   @IsEmail({}, { message: '이메일 형식이 아닙니다.' })
   @Index()

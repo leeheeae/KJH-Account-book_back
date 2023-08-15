@@ -17,6 +17,8 @@ import { UsersRepository } from './repository/users.repository';
 import { I_JWT_SERVICE, I_LOGGER_SERVICE } from 'src/common/constants/service/service.constant';
 import { resultError } from 'src/common/response/error.response';
 import { resultSuccess } from 'src/common/response/success.response';
+import { USER_ERROR } from 'src/common/constants/error.constant';
+import * as _ from 'lodash';
 
 @Injectable()
 export class UsersService implements IUsersService {
@@ -80,8 +82,25 @@ export class UsersService implements IUsersService {
     await queryRunner.connect();
     await queryRunner.startTransaction();
     try {
-      const user = await this.usersRepository.join(joinInput);
+      const response = await this.usersRepository.join(joinInput);
 
+      if (_.isEqual(response, USER_ERROR.notMatchedPasswords)) {
+        return resultError({
+          error: USER_ERROR.notMatchedPasswords.error,
+          text: USER_ERROR.notMatchedPasswords.text,
+          statusCode: HttpStatus.BAD_REQUEST,
+        });
+      }
+
+      if (_.isEqual(response, USER_ERROR.existUser)) {
+        return resultError({
+          error: USER_ERROR.existUser.error,
+          text: USER_ERROR.existUser.text,
+          statusCode: HttpStatus.BAD_REQUEST,
+        });
+      }
+
+      const user = response as User;
       await queryRunner.manager.save(user);
       await queryRunner.commitTransaction();
 
@@ -98,14 +117,35 @@ export class UsersService implements IUsersService {
 
   async login(loginInput: LoginInput): Promise<LoginOutput> {
     try {
-      const user = await this.usersRepository.verifiedUserData(loginInput).then(result => {
-        delete result.password;
+      const response = await this.usersRepository.verifiedUserData(loginInput).then(result => {
+        if (_.isEqual(result, USER_ERROR.notExistUser)) return USER_ERROR.notExistUser;
+        if (_.isEqual(result, USER_ERROR.wrongPassword)) return USER_ERROR.wrongPassword;
+        const user = result as User;
+        delete user.password;
         return result;
       });
 
+      if (_.isEqual(response, USER_ERROR.notExistUser)) {
+        return resultError({
+          error: USER_ERROR.notExistUser.error,
+          text: USER_ERROR.notExistUser.text,
+          statusCode: HttpStatus.BAD_REQUEST,
+        });
+      }
+
+      if (_.isEqual(response, USER_ERROR.wrongPassword)) {
+        return resultError({
+          error: USER_ERROR.wrongPassword.error,
+          text: USER_ERROR.wrongPassword.text,
+          statusCode: HttpStatus.BAD_REQUEST,
+        });
+      }
+
+      const user = response as User;
+
       const token = this.jwtService.sign({ id: user.id });
 
-      const refreshToken = this.jwtService.refreshSign({});
+      const refreshToken = this.jwtService.refreshSign({ id: user.id });
 
       const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
 

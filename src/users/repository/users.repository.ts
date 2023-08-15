@@ -1,6 +1,6 @@
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
-import { BadRequestException, HttpException } from '@nestjs/common';
+import { HttpException } from '@nestjs/common';
 import { JoinInput } from '../dto/join.dto';
 import { LoginInput } from '../dto/login.dto';
 import * as bcrypt from 'bcrypt';
@@ -31,21 +31,19 @@ export class UsersRepository extends Repository<User> {
     }
   }
 
-  async join({ email, password, confirmationPassword, name, address }: JoinInput): Promise<User> {
+  async join({
+    email,
+    password,
+    confirmationPassword,
+    name,
+    address,
+  }: JoinInput): Promise<User | typeof USER_ERROR.notMatchedPasswords | typeof USER_ERROR.existUser> {
     try {
-      if (password !== confirmationPassword) {
-        throw new BadRequestException({
-          message: USER_ERROR.notMatchedPasswords,
-        });
-      }
+      if (password !== confirmationPassword) return USER_ERROR.notMatchedPasswords;
 
       const exists = await this.findOne({ where: { email } });
 
-      if (exists) {
-        throw new BadRequestException({
-          message: USER_ERROR.existUser,
-        });
-      }
+      if (exists) return USER_ERROR.existUser;
 
       const user = this.create({
         email,
@@ -53,29 +51,25 @@ export class UsersRepository extends Repository<User> {
         name,
         address,
       });
+
       return user;
     } catch (error) {
       throw new HttpException(error.response.message, error.status);
     }
   }
 
-  async verifiedUserData({ email, password }: LoginInput): Promise<User> {
+  async verifiedUserData({
+    email,
+    password,
+  }: LoginInput): Promise<User | typeof USER_ERROR.notExistUser | typeof USER_ERROR.wrongPassword> {
     try {
       const user = await this.findOne({ where: { email } });
 
-      if (!user) {
-        throw new BadRequestException({
-          message: USER_ERROR.notExistUser,
-        });
-      }
+      if (!user) return USER_ERROR.notExistUser;
 
       const passwordCorrect = await bcrypt.compare(password, user.password);
 
-      if (!passwordCorrect) {
-        throw new BadRequestException({
-          message: USER_ERROR.wrongPassword,
-        });
-      }
+      if (!passwordCorrect) return USER_ERROR.wrongPassword;
 
       return user;
     } catch (error) {
