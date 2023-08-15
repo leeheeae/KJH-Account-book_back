@@ -8,7 +8,7 @@
   ],
   "info": {
     "version": "0.0.1",
-    "title": "KJH-companion-animal_back",
+    "title": "kjh-companion-animal-back",
     "description": "",
     "license": {
       "name": "UNLICENSED"
@@ -36,10 +36,926 @@
         "x-nestia-jsDocTags": [],
         "x-nestia-method": "GET"
       }
+    },
+    "/users/owner": {
+      "post": {
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindByIdTryCatch_lt_IFindByIdOutput_comma__space_IErrorResponse_lt_string_gt__gt_"
+                }
+              }
+            },
+            "x-nestia-encrypted": false
+          }
+        },
+        "x-nestia-namespace": "users.owner.findById",
+        "x-nestia-jsDocTags": [],
+        "x-nestia-method": "POST"
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ILoginInput"
+              }
+            }
+          },
+          "required": true,
+          "x-nestia-encrypted": false
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginTryCatch_lt_ILoginOutputData_comma__space_IErrorResponse_lt__doublequote_NOT_EXIST_USER_doublequote__space__or__space__doublequote_IS_NOT_VALID_PASSWORD_doublequote__gt__gt_"
+                }
+              }
+            },
+            "x-nestia-encrypted": false
+          }
+        },
+        "x-nestia-namespace": "users.login.login",
+        "x-nestia-jsDocTags": [],
+        "x-nestia-method": "POST"
+      }
+    },
+    "/users/register": {
+      "post": {
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IRegisterInput"
+              }
+            }
+          },
+          "required": true,
+          "x-nestia-encrypted": false
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisterTryCatch_lt_null_comma__space_IErrorResponse_lt__doublequote_ALREADY_EXIST_USER_doublequote__gt__gt_"
+                }
+              }
+            },
+            "x-nestia-encrypted": false
+          }
+        },
+        "x-nestia-namespace": "users.register.register",
+        "x-nestia-jsDocTags": [],
+        "x-nestia-method": "POST"
+      }
     }
   },
   "components": {
-    "schemas": {},
+    "schemas": {
+      "FindByIdTryCatch_lt_IFindByIdOutput_comma__space_IErrorResponse_lt_string_gt__gt_": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/IErrorResponse_lt_string_gt_"
+          },
+          {
+            "$ref": "#/components/schemas/ISuccessResponse_lt_IFindByIdOutput_gt_"
+          }
+        ]
+      },
+      "IErrorResponse_lt_string_gt_": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "boolean",
+            "enum": [
+              false
+            ]
+          },
+          "message": {
+            "$ref": "#/components/schemas/__type"
+          },
+          "data": {
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string"
+          }
+        },
+        "nullable": false,
+        "required": [
+          "success",
+          "message",
+          "data"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "__type": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string"
+          },
+          "statusCode": {
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "number"
+          }
+        },
+        "nullable": false,
+        "required": [
+          "text",
+          "statusCode"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "ISuccessResponse_lt_IFindByIdOutput_gt_": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "boolean"
+          },
+          "requestToResponse": {
+            "type": "string",
+            "x-typia-required": false,
+            "x-typia-optional": true,
+            "pattern": "^([+-]?\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?ms)$"
+          },
+          "message": {
+            "$ref": "#/components/schemas/__type.o1"
+          },
+          "data": {
+            "$ref": "#/components/schemas/IFindByIdOutput"
+          }
+        },
+        "nullable": false,
+        "required": [
+          "success",
+          "message",
+          "data"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "__type.o1": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string"
+          },
+          "statusCode": {
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "number"
+          }
+        },
+        "nullable": false,
+        "required": [
+          "text",
+          "statusCode"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "IFindByIdOutput": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "x-typia-metaTags": [
+              {
+                "kind": "type",
+                "value": "int"
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "type",
+                "text": [
+                  {
+                    "text": "int",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "integer"
+          },
+          "email": {
+            "x-typia-metaTags": [
+              {
+                "kind": "format",
+                "value": "email"
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "format",
+                "text": [
+                  {
+                    "text": "email",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "format": "email"
+          },
+          "username": {
+            "x-typia-metaTags": [
+              {
+                "kind": "minLength",
+                "value": 1
+              },
+              {
+                "kind": "maxLength",
+                "value": 20
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "minLength",
+                "text": [
+                  {
+                    "text": "1",
+                    "kind": "text"
+                  }
+                ]
+              },
+              {
+                "name": "maxLength",
+                "text": [
+                  {
+                    "text": "20",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 20,
+            "nullable": true
+          },
+          "password": {
+            "x-typia-metaTags": [
+              {
+                "kind": "minLength",
+                "value": 1
+              },
+              {
+                "kind": "maxLength",
+                "value": 50
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "minLength",
+                "text": [
+                  {
+                    "text": "1",
+                    "kind": "text"
+                  }
+                ]
+              },
+              {
+                "name": "maxLength",
+                "text": [
+                  {
+                    "text": "50",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 50
+          },
+          "name": {
+            "x-typia-metaTags": [
+              {
+                "kind": "minLength",
+                "value": 1
+              },
+              {
+                "kind": "maxLength",
+                "value": 50
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "minLength",
+                "text": [
+                  {
+                    "text": "1",
+                    "kind": "text"
+                  }
+                ]
+              },
+              {
+                "name": "maxLength",
+                "text": [
+                  {
+                    "text": "50",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 50,
+            "nullable": true
+          },
+          "address": {
+            "x-typia-metaTags": [
+              {
+                "kind": "minLength",
+                "value": 1
+              },
+              {
+                "kind": "maxLength",
+                "value": 50
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "minLength",
+                "text": [
+                  {
+                    "text": "1",
+                    "kind": "text"
+                  }
+                ]
+              },
+              {
+                "name": "maxLength",
+                "text": [
+                  {
+                    "text": "50",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 50,
+            "nullable": true
+          },
+          "avatarUrl": {
+            "x-typia-metaTags": [
+              {
+                "kind": "minLength",
+                "value": 1
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "minLength",
+                "text": [
+                  {
+                    "text": "1",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "minLength": 1,
+            "nullable": true
+          },
+          "role": {
+            "$ref": "#/components/schemas/RoleData"
+          },
+          "refreshToken": {
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string"
+          },
+          "createdAt": {
+            "x-typia-metaTags": [
+              {
+                "kind": "format",
+                "value": "datetime"
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "format",
+                "text": [
+                  {
+                    "text": "date-time",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "x-typia-metaTags": [
+              {
+                "kind": "format",
+                "value": "datetime"
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "format",
+                "text": [
+                  {
+                    "text": "date-time",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "nullable": false,
+        "required": [
+          "id",
+          "email",
+          "username",
+          "password",
+          "name",
+          "address",
+          "avatarUrl",
+          "role",
+          "refreshToken",
+          "createdAt",
+          "updatedAt"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "RoleData": {
+        "type": "string",
+        "enum": [
+          "USER",
+          "ADMIN"
+        ]
+      },
+      "ILoginInput": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "x-typia-metaTags": [
+              {
+                "kind": "format",
+                "value": "email"
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "format",
+                "text": [
+                  {
+                    "text": "email",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "x-typia-metaTags": [
+              {
+                "kind": "pattern",
+                "value": "^(?=.*[a-zA-Z])(?=.*[0-9]).{3,16}$"
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "pattern",
+                "text": [
+                  {
+                    "text": "^(?=.*[a-zA-Z])(?=.*[0-9]).{3,16}$",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "pattern": "^(?=.*[a-zA-Z])(?=.*[0-9]).{3,16}$"
+          }
+        },
+        "nullable": false,
+        "required": [
+          "email",
+          "password"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "LoginTryCatch_lt_ILoginOutputData_comma__space_IErrorResponse_lt__doublequote_NOT_EXIST_USER_doublequote__space__or__space__doublequote_IS_NOT_VALID_PASSWORD_doublequote__gt__gt_": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/IErrorResponse_lt__doublequote_NOT_EXIST_USER_doublequote__space__or__space__doublequote_IS_NOT_VALID_PASSWORD_doublequote__gt_"
+          },
+          {
+            "$ref": "#/components/schemas/ISuccessResponse_lt_ILoginOutputData_gt_"
+          }
+        ]
+      },
+      "IErrorResponse_lt__doublequote_NOT_EXIST_USER_doublequote__space__or__space__doublequote_IS_NOT_VALID_PASSWORD_doublequote__gt_": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "boolean",
+            "enum": [
+              false
+            ]
+          },
+          "message": {
+            "$ref": "#/components/schemas/__type"
+          },
+          "data": {
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "enum": [
+              "NOT_EXIST_USER",
+              "IS_NOT_VALID_PASSWORD"
+            ]
+          }
+        },
+        "nullable": false,
+        "required": [
+          "success",
+          "message",
+          "data"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "ISuccessResponse_lt_ILoginOutputData_gt_": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "boolean"
+          },
+          "requestToResponse": {
+            "type": "string",
+            "x-typia-required": false,
+            "x-typia-optional": true,
+            "pattern": "^([+-]?\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?ms)$"
+          },
+          "message": {
+            "$ref": "#/components/schemas/__type.o1"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ILoginOutputData"
+          }
+        },
+        "nullable": false,
+        "required": [
+          "success",
+          "message",
+          "data"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "ILoginOutputData": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "x-typia-metaTags": [
+              {
+                "kind": "minLength",
+                "value": 1
+              },
+              {
+                "kind": "pattern",
+                "value": "^[A-Za-z0-9-_]+\\.[A-Za-z0-9-_]+\\.[A-Za-z0-9-_]*$"
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "minLength",
+                "text": [
+                  {
+                    "text": "1",
+                    "kind": "text"
+                  }
+                ]
+              },
+              {
+                "name": "pattern",
+                "text": [
+                  {
+                    "text": "^[A-Za-z0-9-_]+\\.[A-Za-z0-9-_]+\\.[A-Za-z0-9-_]*$",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9-_]+\\.[A-Za-z0-9-_]+\\.[A-Za-z0-9-_]*$"
+          },
+          "refreshToken": {
+            "x-typia-metaTags": [
+              {
+                "kind": "minLength",
+                "value": 1
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "minLength",
+                "text": [
+                  {
+                    "text": "1",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "nullable": false,
+        "required": [
+          "token",
+          "refreshToken"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "IRegisterInput": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "x-typia-metaTags": [
+              {
+                "kind": "format",
+                "value": "email"
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "format",
+                "text": [
+                  {
+                    "text": "email",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "format": "email"
+          },
+          "username": {
+            "x-typia-metaTags": [
+              {
+                "kind": "minLength",
+                "value": 1
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "minLength",
+                "text": [
+                  {
+                    "text": "1",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "minLength": 1
+          },
+          "password": {
+            "x-typia-metaTags": [
+              {
+                "kind": "minLength",
+                "value": 1
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "minLength",
+                "text": [
+                  {
+                    "text": "1",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "x-typia-metaTags": [
+              {
+                "kind": "minLength",
+                "value": 1
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "minLength",
+                "text": [
+                  {
+                    "text": "1",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "minLength": 1
+          },
+          "address": {
+            "x-typia-metaTags": [
+              {
+                "kind": "minLength",
+                "value": 1
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "minLength",
+                "text": [
+                  {
+                    "text": "1",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "minLength": 1
+          },
+          "avatarUrl": {
+            "x-typia-required": false,
+            "x-typia-optional": true,
+            "type": "string"
+          },
+          "refreshToken": {
+            "x-typia-required": false,
+            "x-typia-optional": true,
+            "type": "string"
+          },
+          "role": {
+            "x-typia-required": false,
+            "x-typia-optional": true,
+            "type": "string"
+          }
+        },
+        "nullable": false,
+        "required": [
+          "email",
+          "username",
+          "password",
+          "name",
+          "address"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "RegisterTryCatch_lt_null_comma__space_IErrorResponse_lt__doublequote_ALREADY_EXIST_USER_doublequote__gt__gt_": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/IErrorResponse_lt__doublequote_ALREADY_EXIST_USER_doublequote__gt_"
+          },
+          {
+            "$ref": "#/components/schemas/ISuccessResponse_lt_null_gt_"
+          }
+        ]
+      },
+      "IErrorResponse_lt__doublequote_ALREADY_EXIST_USER_doublequote__gt_": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "boolean",
+            "enum": [
+              false
+            ]
+          },
+          "message": {
+            "$ref": "#/components/schemas/__type"
+          },
+          "data": {
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "enum": [
+              "ALREADY_EXIST_USER"
+            ]
+          }
+        },
+        "nullable": false,
+        "required": [
+          "success",
+          "message",
+          "data"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "ISuccessResponse_lt_null_gt_": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "boolean"
+          },
+          "requestToResponse": {
+            "type": "string",
+            "x-typia-required": false,
+            "x-typia-optional": true,
+            "pattern": "^([+-]?\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?ms)$"
+          },
+          "message": {
+            "$ref": "#/components/schemas/__type.o1"
+          },
+          "data": {
+            "type": "null",
+            "x-typia-required": true,
+            "x-typia-optional": false
+          }
+        },
+        "nullable": false,
+        "required": [
+          "success",
+          "message",
+          "data"
+        ],
+        "x-typia-jsDocTags": []
+      }
+    },
     "securitySchemes": {
       "bearer": {
         "type": "apiKey",

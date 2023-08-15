@@ -1,7 +1,12 @@
 import { IFindByIdInput, IFindByIdOutput } from './dto/find-by-id.dto';
 import { IJwtService } from './../libs/jwt/interface/jwt-service.interface';
 import { I_JWT_SERVICE } from './../common/constants/service/service-interface.constant';
-import { LoginError, RegisterTryCatch, ValueOfRegisterError } from '../common/response/try-catch/try-catch.response';
+import {
+  FindByIdTryCatch,
+  LoginError,
+  RegisterTryCatch,
+  ValueOfRegisterError,
+} from '../common/response/try-catch/try-catch.response';
 import { FIND_BY_ID_ERROR, REGISTER_ERROR } from '../common/response/error/user-error.response';
 import { Inject, Injectable } from '@nestjs/common';
 import { ILoginInput, ILoginOutputData } from './dto/login.dto';
@@ -10,7 +15,7 @@ import { LOGIN_ERROR } from 'src/common/response/error/user-error.response';
 import { ResultResponse } from 'src/common/response/success/success.response';
 import { IUsersService } from './interface/user-service.interface';
 import { UserRepository } from './repository/user.repository';
-import { IFindByEmailInput } from './dto/find-by-email.dto';
+import { IFindByEmailInput, IFindByEmailOutput } from './dto/find-by-email.dto';
 import { IRegisterInput } from './dto/register.dto';
 import { User } from '@prisma/client';
 import * as _ from 'lodash';
@@ -24,7 +29,7 @@ export class UsersService implements IUsersService {
   ) {}
   async findById({
     userId,
-  }: IFindByIdInput): Promise<FindByEmailTryCatch<IFindByIdOutput, typeof FIND_BY_ID_ERROR.NOT_FOUND_USER>> {
+  }: IFindByIdInput): Promise<FindByIdTryCatch<IFindByIdOutput, typeof FIND_BY_ID_ERROR.NOT_FOUND_USER>> {
     const start = Date.now();
     const user = await this.userRepository.findById(userId);
 
@@ -45,7 +50,7 @@ export class UsersService implements IUsersService {
 
   async findByEmail(
     findByEmailInput: IFindByEmailInput,
-  ): Promise<FindByEmailTryCatch<User, typeof FIND_BY_ID_ERROR.NOT_FOUND_USER>> {
+  ): Promise<FindByEmailTryCatch<IFindByEmailOutput, typeof FIND_BY_ID_ERROR.NOT_FOUND_USER>> {
     const start = Date.now();
 
     const user = await this.userRepository.findByEmail(findByEmailInput);

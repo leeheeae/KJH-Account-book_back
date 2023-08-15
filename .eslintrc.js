@@ -54,6 +54,7 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off', // ! 함수의 반환 타입을 명시하지 않으면 경고를 발생시킵니다.
     '@typescript-eslint/no-use-before-define': 'off', // ! 변수를 선언하기 전에 사용하지 않으면 경고를 발생시킵니다.
     '@typescript-eslint/ban-types': 'off', // ! 타입을 사용하지 않으면 경고를 발생시킵니다.
+    '@typescript-eslint/no-empty-interface': 'off', // ! 빈 interface 를 사용하면 경고를 발생시킵니다.
 
     '@typescript-eslint/no-var-requires': 'off', // ? require 를 사용해도 경고를 발생시키지 않습니다.
 

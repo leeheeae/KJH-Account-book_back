@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  /// @format uuid
+  /// @type int
   id Int @id @default(autoincrement())
 
   /// @format email
@@ -36,7 +36,6 @@ model User {
   /// @minLength 1
   avatarUrl String? @db.VarChar(255) // 유저 프로필 사진
 
-  /// @minLength 1
   role RoleData @default(USER) // 유저 권한
 
   refreshToken String @db.VarChar(255) // 유저 refresh token

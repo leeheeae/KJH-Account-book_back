@@ -1,3 +1,5 @@
+import { LoginTryCatch } from './../common/response/try-catch/try-catch.response';
+import { I_USERS_SERVICE } from './../common/constants/service/service-interface.constant';
 import {
   FindByIdTryCatch,
   RegisterTryCatch,
@@ -8,8 +10,6 @@ import { AuthUser } from './../libs/auth/auth-user.decorator';
 import { TypedBody, TypedRoute } from '@nestia/core';
 import { Controller, Inject } from '@nestjs/common';
 import { ILoginInput, ILoginOutputData } from './dto/login.dto';
-import { LoginTryCatch } from 'src/common/response/try-catch/try-catch.response';
-import { I_USERS_SERVICE } from 'src/common/constants/service/service-interface.constant';
 import { IUsersService } from './interface/user-service.interface';
 import { IRegisterInput } from './dto/register.dto';
 import { IFindByIdOutput } from './dto/find-by-id.dto';
