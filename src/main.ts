@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import { SwaggerModule } from '@nestjs/swagger';
 import * as express from 'express';
 import { join } from 'path';
-import { BACKEND_URL, PORT } from './common/constants/global.constant';
+import { BACKEND_URL, PORT } from './common/constants/common.constant';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
