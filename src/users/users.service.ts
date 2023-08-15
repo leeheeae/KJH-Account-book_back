@@ -2,10 +2,12 @@ import { IFindByIdInput, IFindByIdOutput } from './dto/find-by-id.dto';
 import { IJwtService } from './../libs/jwt/interface/jwt-service.interface';
 import { I_JWT_SERVICE } from './../common/constants/service/service-interface.constant';
 import {
+  FindByEmailValueError,
   FindByIdTryCatch,
-  LoginError,
+  FindByIdValueError,
   JoinTryCatch,
   JoinValueError,
+  LoginValueError,
 } from '../common/response/try-catch/try-catch.response';
 import { FIND_BY_ID_ERROR, REGISTER_ERROR } from '../common/response/error/user-error.response';
 import { Inject, Injectable } from '@nestjs/common';
@@ -27,9 +29,7 @@ export class UsersService implements IUsersService {
     private readonly userRepository: UserRepository,
     @Inject(I_JWT_SERVICE) private readonly jwtService: IJwtService,
   ) {}
-  async findById({
-    userId,
-  }: IFindByIdInput): Promise<FindByIdTryCatch<IFindByIdOutput, typeof FIND_BY_ID_ERROR.NOT_FOUND_USER>> {
+  async findById({ userId }: IFindByIdInput): Promise<FindByIdTryCatch<IFindByIdOutput, FindByIdValueError>> {
     const start = Date.now();
     const user = await this.userRepository.findById(userId);
 
@@ -50,7 +50,7 @@ export class UsersService implements IUsersService {
 
   async findByEmail(
     findByEmailInput: IFindByEmailInput,
-  ): Promise<FindByEmailTryCatch<IFindByEmailOutput, typeof FIND_BY_ID_ERROR.NOT_FOUND_USER>> {
+  ): Promise<FindByEmailTryCatch<IFindByEmailOutput, FindByEmailValueError>> {
     const start = Date.now();
 
     const user = await this.userRepository.findByEmail(findByEmailInput);
@@ -70,7 +70,7 @@ export class UsersService implements IUsersService {
     });
   }
 
-  async login(loginInput: ILoginInput): Promise<LoginTryCatch<ILoginOutputData, LoginError[keyof LoginError]>> {
+  async login(loginInput: ILoginInput): Promise<LoginTryCatch<ILoginOutputData, LoginValueError>> {
     const start = Date.now();
 
     const loginResponse = await this.userRepository.login(loginInput);

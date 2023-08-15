@@ -39,15 +39,11 @@ export class UserRepository {
       },
     });
 
-    if (!user) {
-      return LOGIN_ERROR.NOT_EXIST_USER;
-    }
+    if (!user) return LOGIN_ERROR.NOT_EXIST_USER;
 
     const isPasswordValid = await bcrypt.compare(loginInput.password, user.password);
 
-    if (!isPasswordValid) {
-      return LOGIN_ERROR.IS_NOT_VALID_PASSWORD;
-    }
+    if (!isPasswordValid) return LOGIN_ERROR.IS_NOT_VALID_PASSWORD;
 
     return user;
   }
