@@ -17,12 +17,12 @@ export class UsersController {
   /**
    * * 유저 아이디로 유저 찾기
    * @param authUser 유저 아이디
-   * @returns 유저 정보
+   * @returns 유저 정보 - status code: 200
    *
    * @tag User
    * @summary 유저 아이디로 유저 찾기 API (로그인 필요)
    * @controller UsersController.findById()
-   * @throws FIND_BY_ID_ERROR.NOT_FOUND_USER
+   * @throws FIND_BY_ID_ERROR.NOT_FOUND_USER - status code: 404
    */
   @TypedRoute.Post('owner')
   async findById(@AuthUser() authUser: User): Promise<FindByIdTryCatch<IFindByIdOutput, FindByIdValueError>> {
@@ -32,13 +32,13 @@ export class UsersController {
   /**
    * * 로그인
    * @param loginInput 로그인 정보
-   * @returns 로그인 결과
+   * @returns 로그인 결과 - status code: 200
    *
    * @tag User
    * @summary 로그인 API
    * @controller UsersController.login()
-   * @throws LOGIN_ERROR.NOT_EXIST_USER
-   * @throws LOGIN_ERROR.IS_NOT_VALID_PASSWORD
+   * @throws LOGIN_ERROR.NOT_EXIST_USER - status code: 404
+   * @throws LOGIN_ERROR.IS_NOT_VALID_PASSWORD - status code: 400
    */
   @TypedRoute.Post('login')
   async login(@TypedBody() loginInput: ILoginInput): Promise<LoginTryCatch<ILoginOutputData, LoginValueError>> {
@@ -48,12 +48,12 @@ export class UsersController {
   /**
    * * 회원가입
    * @param joinInput 가입 정보
-   * @returns 가입 결과
+   * @returns 가입 결과 - status code: 200
    *
    * @tag User
    * @summary 회원가입 API
    * @controller UsersController.join()
-   * @throws JOIN_ERROR.ALREADY_EXIST_EMAIL
+   * @throws JOIN_ERROR.ALREADY_EXIST_EMAIL - status code: 400
    */
   @TypedRoute.Post('join')
   async join(@TypedBody() joinInput: IJoinInput): Promise<JoinTryCatch<null, JoinValueError>> {
