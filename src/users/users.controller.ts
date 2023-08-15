@@ -1,8 +1,4 @@
-import {
-  FindByEmailValueError,
-  LoginTryCatch,
-  LoginValueError,
-} from './../common/response/try-catch/try-catch.response';
+import { FindByIdValueError, LoginTryCatch, LoginValueError } from './../common/response/try-catch/try-catch.response';
 import { I_USERS_SERVICE } from './../common/constants/service/service-interface.constant';
 import { FindByIdTryCatch, JoinTryCatch, JoinValueError } from '../common/response/try-catch/try-catch.response';
 import { AuthUser } from './../libs/auth/auth-user.decorator';
@@ -27,7 +23,7 @@ export class UsersController {
    * @summary 유저 아이디로 유저 찾기 API (로그인 필요)
    */
   @TypedRoute.Post('owner')
-  async findById(@AuthUser() authUser: User): Promise<FindByIdTryCatch<IFindByIdOutput, FindByEmailValueError>> {
+  async findById(@AuthUser() authUser: User): Promise<FindByIdTryCatch<IFindByIdOutput, FindByIdValueError>> {
     return this.usersService.findById({ userId: authUser.id });
   }
 

@@ -19,25 +19,25 @@ export const LOGIN_ERROR: Record<string, IErrorResponse<'NOT_EXIST_USER' | 'IS_N
   },
 };
 
-export const FIND_BY_EMAIL_ERROR: Record<string, IErrorResponse<string>> = {
+export const FIND_BY_EMAIL_ERROR: Record<string, IErrorResponse<'NOT_FOUND_USER'>> = {
   NOT_FOUND_USER: {
     success: false,
     message: {
       text: '존재하지 않는 유저입니다.',
       statusCode: 400,
     },
-    data: 'FIND_BY_EMAIL_ERROR',
+    data: 'NOT_FOUND_USER',
   },
 };
 
-export const FIND_BY_ID_ERROR: Record<string, IErrorResponse<string>> = {
+export const FIND_BY_ID_ERROR: Record<string, IErrorResponse<'NOT_FOUND_USER'>> = {
   NOT_FOUND_USER: {
     success: false,
     message: {
       text: '존재하지 않는 유저입니다.',
       statusCode: 400,
     },
-    data: 'FIND_BY_ID_ERROR',
+    data: 'NOT_FOUND_USER',
   },
 };
 
