@@ -1,3 +1,10 @@
-export const BACKEND_URL = 'http://localhost:8000';
-export const PORT = 8000;
+import { join } from 'path';
+export const CONFIG_OPTIONS = 'CONFIG_OPTIONS';
+export const fileFolder = join(process.cwd(), `./files`);
+export const DEV = 'development';
+export const DEV_PORT = '8000';
+export const PROD = 'production';
+export const PROD_PORT = '3000';
+export const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:8000';
+export const PORT = process.env.PORT || 8000;
 export const BEFORE_EXIT = 'beforeExit';
