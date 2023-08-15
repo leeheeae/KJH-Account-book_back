@@ -1,11 +1,12 @@
 import { LOGIN_ERROR } from 'src/common/response/error/user-error.response';
 import { ILoginInput } from '../dto/login.dto';
-import { IRegisterInput } from '../dto/register.dto';
+import { IJoinInput } from '../dto/join.dto';
 import { PrismaService } from './../../prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { User } from '@prisma/client';
 import { IFindByEmailInput } from '../dto/find-by-email.dto';
+import * as _ from 'lodash';
 
 @Injectable()
 export class UserRepository {
@@ -63,12 +64,17 @@ export class UserRepository {
     });
   }
 
-  async register(registerInput: IRegisterInput) {
+  async register(registerInput: IJoinInput) {
+    const { email, password, role, address, name, username, avatarUrl } = registerInput;
     const user = await this.prisma.user.create({
       data: {
-        ...registerInput,
-        password: await bcrypt.hash(registerInput.password, 10),
-        role: registerInput.role === 'ADMIN' ? 'ADMIN' : 'USER',
+        email,
+        address,
+        name,
+        username,
+        avatarUrl,
+        password: await bcrypt.hash(password, 10),
+        role: role === 'ADMIN' ? 'ADMIN' : 'USER',
         refreshToken: '',
       },
     });

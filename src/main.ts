@@ -14,6 +14,7 @@ async function bootstrap() {
     docs.servers = [{ url: 'http://localhost:8000' }];
     SwaggerModule.setup('swagger', app, docs);
   }
+
   app.use('/files', express.static(join(__dirname, '../files')));
   const start = () => console.log(`Server Start! ${BACKEND_URL}`);
   await app.listen(PORT, start);

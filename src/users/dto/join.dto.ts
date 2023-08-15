@@ -1,4 +1,4 @@
-export interface IRegisterInput {
+export interface IJoinInput {
   /**
    * @format email
    */

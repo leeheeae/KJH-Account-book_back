@@ -1,17 +1,13 @@
 import { LoginTryCatch } from './../common/response/try-catch/try-catch.response';
 import { I_USERS_SERVICE } from './../common/constants/service/service-interface.constant';
-import {
-  FindByIdTryCatch,
-  RegisterTryCatch,
-  ValueOfRegisterError,
-} from '../common/response/try-catch/try-catch.response';
+import { FindByIdTryCatch, JoinTryCatch, JoinValueError } from '../common/response/try-catch/try-catch.response';
 import { FIND_BY_ID_ERROR, LOGIN_ERROR } from '../common/response/error/user-error.response';
 import { AuthUser } from './../libs/auth/auth-user.decorator';
 import { TypedBody, TypedRoute } from '@nestia/core';
 import { Controller, Inject } from '@nestjs/common';
 import { ILoginInput, ILoginOutputData } from './dto/login.dto';
 import { IUsersService } from './interface/user-service.interface';
-import { IRegisterInput } from './dto/register.dto';
+import { IJoinInput } from './dto/join.dto';
 import { IFindByIdOutput } from './dto/find-by-id.dto';
 import { User } from '@prisma/client';
 
@@ -35,8 +31,8 @@ export class UsersController {
     return this.usersService.login(loginInput);
   }
 
-  @TypedRoute.Post('register')
-  async register(@TypedBody() registerInput: IRegisterInput): Promise<RegisterTryCatch<null, ValueOfRegisterError>> {
-    return this.usersService.register(registerInput);
+  @TypedRoute.Post('join')
+  async join(@TypedBody() joinInput: IJoinInput): Promise<JoinTryCatch<null, JoinValueError>> {
+    return this.usersService.join(joinInput);
   }
 }

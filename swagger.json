@@ -93,7 +93,7 @@
         "x-nestia-method": "POST"
       }
     },
-    "/users/register": {
+    "/users/join": {
       "post": {
         "tags": [],
         "parameters": [],
@@ -102,7 +102,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/IRegisterInput"
+                "$ref": "#/components/schemas/IJoinInput"
               }
             }
           },
@@ -115,14 +115,14 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RegisterTryCatch_lt_null_comma__space_IErrorResponse_lt__doublequote_ALREADY_EXIST_USER_doublequote__gt__gt_"
+                  "$ref": "#/components/schemas/JoinTryCatch_lt_null_comma__space_IErrorResponse_lt__doublequote_ALREADY_EXIST_USER_doublequote__gt__gt_"
                 }
               }
             },
             "x-nestia-encrypted": false
           }
         },
-        "x-nestia-namespace": "users.register.register",
+        "x-nestia-namespace": "users.join.join",
         "x-nestia-jsDocTags": [],
         "x-nestia-method": "POST"
       }
@@ -739,7 +739,7 @@
         ],
         "x-typia-jsDocTags": []
       },
-      "IRegisterInput": {
+      "IJoinInput": {
         "type": "object",
         "properties": {
           "email": {
@@ -883,7 +883,7 @@
         ],
         "x-typia-jsDocTags": []
       },
-      "RegisterTryCatch_lt_null_comma__space_IErrorResponse_lt__doublequote_ALREADY_EXIST_USER_doublequote__gt__gt_": {
+      "JoinTryCatch_lt_null_comma__space_IErrorResponse_lt__doublequote_ALREADY_EXIST_USER_doublequote__gt__gt_": {
         "oneOf": [
           {
             "$ref": "#/components/schemas/IErrorResponse_lt__doublequote_ALREADY_EXIST_USER_doublequote__gt_"

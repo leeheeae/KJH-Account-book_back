@@ -4,8 +4,8 @@ import { I_JWT_SERVICE } from './../common/constants/service/service-interface.c
 import {
   FindByIdTryCatch,
   LoginError,
-  RegisterTryCatch,
-  ValueOfRegisterError,
+  JoinTryCatch,
+  JoinValueError,
 } from '../common/response/try-catch/try-catch.response';
 import { FIND_BY_ID_ERROR, REGISTER_ERROR } from '../common/response/error/user-error.response';
 import { Inject, Injectable } from '@nestjs/common';
@@ -16,7 +16,7 @@ import { ResultResponse } from 'src/common/response/success/success.response';
 import { IUsersService } from './interface/user-service.interface';
 import { UserRepository } from './repository/user.repository';
 import { IFindByEmailInput, IFindByEmailOutput } from './dto/find-by-email.dto';
-import { IRegisterInput } from './dto/register.dto';
+import { IJoinInput } from './dto/join.dto';
 import { User } from '@prisma/client';
 import * as _ from 'lodash';
 import * as bcrypt from 'bcrypt';
@@ -100,14 +100,13 @@ export class UsersService implements IUsersService {
     });
   }
 
-  async register(registerInput: IRegisterInput): Promise<RegisterTryCatch<null, ValueOfRegisterError>> {
+  async join(registerInput: IJoinInput): Promise<JoinTryCatch<null, JoinValueError>> {
     const start = Date.now();
     const { email } = registerInput;
     const existUser = await this.userRepository.findByEmail({ email });
 
-    if (existUser) {
-      return REGISTER_ERROR.ALREADY_EXIST_USER;
-    }
+    if (existUser) return REGISTER_ERROR.ALREADY_EXIST_USER;
+
     await this.userRepository.register(registerInput);
 
     return ResultResponse({
