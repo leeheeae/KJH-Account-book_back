@@ -21,6 +21,7 @@ export class UsersController {
    *
    * @tag User
    * @summary 유저 아이디로 유저 찾기 API (로그인 필요)
+   * @controller UsersController.findById()
    * @throws FIND_BY_ID_ERROR.NOT_FOUND_USER
    */
   @TypedRoute.Post('owner')
@@ -35,6 +36,7 @@ export class UsersController {
    *
    * @tag User
    * @summary 로그인 API
+   * @controller UsersController.login()
    * @throws LOGIN_ERROR.NOT_EXIST_USER
    * @throws LOGIN_ERROR.IS_NOT_VALID_PASSWORD
    */
@@ -50,6 +52,7 @@ export class UsersController {
    *
    * @tag User
    * @summary 회원가입 API
+   * @controller UsersController.join()
    * @throws JOIN_ERROR.ALREADY_EXIST_EMAIL
    */
   @TypedRoute.Post('join')

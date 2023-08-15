@@ -103,6 +103,24 @@
                 "kind": "text"
               }
             ]
+          },
+          {
+            "name": "controller",
+            "text": [
+              {
+                "text": "UsersController.findById()",
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "name": "throws",
+            "text": [
+              {
+                "text": "FIND_BY_ID_ERROR.NOT_FOUND_USER",
+                "kind": "text"
+              }
+            ]
           }
         ],
         "x-nestia-method": "POST"
@@ -183,15 +201,6 @@
             "text": [
               {
                 "text": "로그인 API",
-                "kind": "text"
-              }
-            ]
-          },
-          {
-            "name": "returns",
-            "text": [
-              {
-                "text": "ILoginOutputData",
                 "kind": "text"
               }
             ]
@@ -293,6 +302,15 @@
             "text": [
               {
                 "text": "회원가입 API",
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "name": "throws",
+            "text": [
+              {
+                "text": "JOIN_ERROR.ALREADY_EXIST_EMAIL",
                 "kind": "text"
               }
             ]
