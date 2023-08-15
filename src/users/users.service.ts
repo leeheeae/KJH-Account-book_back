@@ -9,13 +9,14 @@ import { ILoggerService } from 'src/libs/logger/interface/logger-service.interfa
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { USER_SUCCESS } from 'src/common/constants/success.constant';
-import { COMMON_ERROR } from 'src/common/constants/error.constant';
 import { FindByEmailOutput } from './dto/find-by-email.dto';
 import { JoinInput, JoinOutput } from './dto/join.dto';
 import { LoginInput, LoginOutput } from './dto/login.dto';
 import { FindByIdOutput } from './dto/find-by-id.dto';
 import { UsersRepository } from './repository/users.repository';
 import { I_JWT_SERVICE, I_LOGGER_SERVICE } from 'src/common/constants/service/service.constant';
+import { resultError } from 'src/common/response/error.response';
+import { resultSuccess } from 'src/common/response/success.response';
 
 @Injectable()
 export class UsersService implements IUsersService {
@@ -48,20 +49,14 @@ export class UsersService implements IUsersService {
       const user = await this.usersRepository.findById(userId);
 
       //* success
-      return {
-        ok: true,
-        message: { text: USER_SUCCESS.findById.text, statusCode: HttpStatus.OK },
-        data: {
-          user,
-        },
-      };
+      return resultSuccess({
+        text: USER_SUCCESS.findById.text,
+        statusCode: HttpStatus.OK,
+        data: user,
+      }) as FindByIdOutput;
     } catch (error) {
       // ! extraError
-      return {
-        ok: false,
-        error: new Error(error),
-        message: { text: COMMON_ERROR.extraError.text, statusCode: HttpStatus.INTERNAL_SERVER_ERROR },
-      };
+      return resultError(error);
     }
   }
 
@@ -69,21 +64,14 @@ export class UsersService implements IUsersService {
     try {
       const user = await this.usersRepository.findByEmail(email);
       //* success
-      return {
-        ok: true,
-        message: {
-          text: USER_SUCCESS.findByEmail.text,
-          statusCode: HttpStatus.OK,
-        },
-        data: { user },
-      };
+      return resultSuccess({
+        text: USER_SUCCESS.findByEmail.text,
+        statusCode: HttpStatus.OK,
+        data: user,
+      }) as FindByEmailOutput;
     } catch (error) {
       // ! extraError
-      return {
-        ok: false,
-        error: new Error(error),
-        message: { text: COMMON_ERROR.extraError.text, statusCode: HttpStatus.INTERNAL_SERVER_ERROR },
-      };
+      return resultError(error);
     }
   }
 
@@ -98,21 +86,11 @@ export class UsersService implements IUsersService {
       await queryRunner.commitTransaction();
 
       //* success
-      return {
-        ok: true,
-        message: {
-          text: USER_SUCCESS.join.text,
-          statusCode: HttpStatus.OK,
-        },
-      };
+      return resultSuccess({ text: USER_SUCCESS.join.text, statusCode: HttpStatus.OK, data: null });
     } catch (error) {
       await queryRunner.rollbackTransaction();
       // ! extraError
-      return {
-        ok: false,
-        error: new Error(error),
-        message: { text: COMMON_ERROR.extraError.text, statusCode: HttpStatus.INTERNAL_SERVER_ERROR },
-      };
+      return resultError(error);
     } finally {
       await queryRunner.release();
     }
@@ -134,24 +112,14 @@ export class UsersService implements IUsersService {
       await this.usersRepository.saveToken({ user, refreshToken });
 
       //* success
-      return {
-        ok: true,
-        message: {
-          text: USER_SUCCESS.login.text,
-          statusCode: HttpStatus.OK,
-        },
-        data: {
-          token,
-          refreshToken: hashedRefreshToken,
-        },
-      };
+      return resultSuccess({
+        text: USER_SUCCESS.login.text,
+        statusCode: HttpStatus.OK,
+        data: { token, refreshToken: hashedRefreshToken },
+      }) as LoginOutput;
     } catch (error) {
       // ! extraError
-      return {
-        ok: false,
-        error: new Error(error),
-        message: { text: COMMON_ERROR.extraError.text, statusCode: HttpStatus.INTERNAL_SERVER_ERROR },
-      };
+      return resultError(error);
     }
   }
 }

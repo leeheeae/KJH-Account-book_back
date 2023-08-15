@@ -15,7 +15,7 @@ export class UsersRepository extends Repository<User> {
       });
       return user;
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(error.response.message, error.status);
     }
   }
 
@@ -27,7 +27,7 @@ export class UsersRepository extends Repository<User> {
       });
       return user;
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(error.response.message, error.status);
     }
   }
 
@@ -55,7 +55,7 @@ export class UsersRepository extends Repository<User> {
       });
       return user;
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(error.response.message, error.status);
     }
   }
 
@@ -79,7 +79,7 @@ export class UsersRepository extends Repository<User> {
 
       return user;
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(error.response.message, error.status);
     }
   }
 
@@ -88,7 +88,7 @@ export class UsersRepository extends Repository<User> {
       user.refreshToken = hashedToken;
       await this.save(user);
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(error.response.message, error.status);
     }
   }
 }
