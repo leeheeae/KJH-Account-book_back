@@ -14,6 +14,10 @@ import { JwtModule } from './libs/jwt/jwt.module';
 import { LoggerModule } from './libs/logger/logger.module';
 import { User } from './users/entities/user.entity';
 import { I_APP_SERVICE } from './common/constants/service/service.constant';
+import { PetsModule } from './pets/pets.module';
+import { TrailsModule } from './trails/trails.module';
+import { CoursesModule } from './courses/courses.module';
+import { ReportsModule } from './reports/reports.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -58,6 +62,10 @@ import { I_APP_SERVICE } from './common/constants/service/service.constant';
     }),
     HealthModule,
     UsersModule,
+    PetsModule,
+    TrailsModule,
+    CoursesModule,
+    ReportsModule,
   ],
   controllers: [AppController],
   providers: [
